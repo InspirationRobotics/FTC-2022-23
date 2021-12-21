@@ -58,6 +58,7 @@ public class CarouselPark_BLUE extends LinearOpMode {
     DcMotor rightFront;
     DcMotor leftBack;
     DcMotor rightBack;
+    DcMotor spinner;
 
     double power = 0.5;
     @Override
@@ -69,6 +70,7 @@ public class CarouselPark_BLUE extends LinearOpMode {
         leftBack = hardwareMap.dcMotor.get("leftBack");
         rightFront = hardwareMap.dcMotor.get("rightFront");
         rightBack = hardwareMap.dcMotor.get("rightBack");
+        spinner = hardwareMap.dcMotor.get("spinner");
 
         leftFront.setDirection(DcMotor.Direction.REVERSE);
         leftBack.setDirection(DcMotor.Direction.REVERSE);
@@ -76,11 +78,11 @@ public class CarouselPark_BLUE extends LinearOpMode {
         waitForStart();
         runtime.reset();
 
-        //strafe to right
-        leftFront.setPower(-0.35);
-        rightFront.setPower(-0.35);
-        leftBack.setPower(0.35);
-        rightBack.setPower(0.35);
+    //backwards
+        leftFront.setPower(-0.1);
+        rightFront.setPower(-0.1);
+        leftBack.setPower(-0.1);
+        rightBack.setPower(-0.1);
 
         sleep(2000);
 
@@ -89,11 +91,48 @@ public class CarouselPark_BLUE extends LinearOpMode {
         leftBack.setPower(0.0);
         rightBack.setPower(0.0);
 
-     //forward
+    //strafe to left
         leftFront.setPower(0.3);
         rightFront.setPower(0.3);
-        leftBack.setPower(0.3);
-        rightBack.setPower(0.3);
+        leftBack.setPower(-0.3);
+        rightBack.setPower(-0.3);
+
+        sleep(2000);
+
+        leftFront.setPower(0.0);
+        rightFront.setPower(0.0);
+        leftBack.setPower(0.0);
+        rightBack.setPower(0.0);
+
+
+    //spinner starts
+        spinner.setPower(0.35);
+        sleep(1000);
+        spinner.setPower(0.0);
+
+    //spins faster
+        spinner.setPower(0.6);
+        sleep(4000);
+        spinner.setPower(0.0);
+
+    //backwards
+        leftFront.setPower(-0.2);
+        rightFront.setPower(-0.2);
+        leftBack.setPower(-0.2);
+        rightBack.setPower(-0.2);
+
+        sleep(2000);
+
+        leftFront.setPower(0.0);
+        rightFront.setPower(0.0);
+        leftBack.setPower(0.0);
+        rightBack.setPower(0.0);
+
+    //strafe to left
+        leftFront.setPower(0.2);
+        rightFront.setPower(0.2);
+        leftBack.setPower(-0.2);
+        rightBack.setPower(-0.2);
 
         sleep(2000);
 

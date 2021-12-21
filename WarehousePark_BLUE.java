@@ -62,6 +62,7 @@ public class WarehousePark_BLUE extends LinearOpMode {
     DcMotor rightFront;
     DcMotor leftBack;
     DcMotor rightBack;
+    DcMotor collector;
 
     double power = 0.5;
     @Override
@@ -73,6 +74,8 @@ public class WarehousePark_BLUE extends LinearOpMode {
         leftBack = hardwareMap.dcMotor.get("leftBack");
         rightFront = hardwareMap.dcMotor.get("rightFront");
         rightBack = hardwareMap.dcMotor.get("rightBack");
+        collector = hardwareMap.dcMotor.get("collector");
+
 
         leftFront.setDirection(DcMotor.Direction.REVERSE);
         leftBack.setDirection(DcMotor.Direction.REVERSE);
@@ -80,7 +83,7 @@ public class WarehousePark_BLUE extends LinearOpMode {
         waitForStart();
         runtime.reset();
 
-        //going forward
+    //going forward
         leftFront.setPower(0.2);
         rightFront.setPower(0.2);
         leftBack.setPower(0.2);
@@ -93,7 +96,7 @@ public class WarehousePark_BLUE extends LinearOpMode {
         leftBack.setPower(0.0);
         rightBack.setPower(0.0);
 
-        //tank turn
+    //tank turn
         leftFront.setPower(-0.26);
         rightFront.setPower(0.26);
         leftBack.setPower(-0.26);
@@ -106,12 +109,26 @@ public class WarehousePark_BLUE extends LinearOpMode {
         leftBack.setPower(0.0);
         rightBack.setPower(0.0);
 
-        //going forward
+    //going forward
 
         leftFront.setPower(0.9);
         rightFront.setPower(0.9);
         leftBack.setPower(0.9);
         rightBack.setPower(0.9);
+
+        sleep(950);
+
+        leftFront.setPower(0.0);
+        rightFront.setPower(0.0);
+        leftBack.setPower(0.0);
+        rightBack.setPower(0.0);
+
+    //going forward, but slowing it down.
+
+        leftFront.setPower(0.3);
+        rightFront.setPower(0.3);
+        leftBack.setPower(0.3);
+        rightBack.setPower(0.3);
 
         sleep(1500);
 
@@ -119,6 +136,26 @@ public class WarehousePark_BLUE extends LinearOpMode {
         rightFront.setPower(0.0);
         leftBack.setPower(0.0);
         rightBack.setPower(0.0);
+
+    //strafe to left
+        leftFront.setPower(0.2);
+        rightFront.setPower(0.2);
+        leftBack.setPower(-0.2);
+        rightBack.setPower(-0.2);
+
+        sleep(2000);
+
+        leftFront.setPower(0.0);
+        rightFront.setPower(0.0);
+        leftBack.setPower(0.0);
+        rightBack.setPower(0.0);
+
+    //collector starts
+
+        collector.setPower (-0.9);
+        sleep(3500);
+        collector.setPower(0.0);
+
 
 
 
