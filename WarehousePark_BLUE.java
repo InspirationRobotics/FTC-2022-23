@@ -37,7 +37,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
-
+import com.qualcomm.robotcore.hardware.Servo;
 
 /**
  * This file contains an minimal example of a Linear "OpMode". An OpMode is a 'program' that runs in either
@@ -63,6 +63,8 @@ public class WarehousePark_BLUE extends LinearOpMode {
     DcMotor leftBack;
     DcMotor rightBack;
     DcMotor collector;
+    Servo dropper;
+
 
     double power = 0.5;
     @Override
@@ -75,7 +77,7 @@ public class WarehousePark_BLUE extends LinearOpMode {
         rightFront = hardwareMap.dcMotor.get("rightFront");
         rightBack = hardwareMap.dcMotor.get("rightBack");
         collector = hardwareMap.dcMotor.get("collector");
-
+        dropper = hardwareMap.servo.get("dropper");
 
         leftFront.setDirection(DcMotor.Direction.REVERSE);
         leftBack.setDirection(DcMotor.Direction.REVERSE);
@@ -83,26 +85,32 @@ public class WarehousePark_BLUE extends LinearOpMode {
         waitForStart();
         runtime.reset();
 
-    //going forward
-        leftFront.setPower(0.2);
-        rightFront.setPower(0.2);
-        leftBack.setPower(0.2);
-        rightBack.setPower(0.2);
+    //going backward
+        leftFront.setPower(-0.22);
+        rightFront.setPower(-0.22);
+        leftBack.setPower(-0.22);
+        rightBack.setPower(-0.22);
 
-        sleep(2000);
+        sleep(2050);
 
         leftFront.setPower(0.0);
         rightFront.setPower(0.0);
         leftBack.setPower(0.0);
         rightBack.setPower(0.0);
 
-    //tank turn
-        leftFront.setPower(-0.26);
-        rightFront.setPower(0.26);
-        leftBack.setPower(-0.26);
-        rightBack.setPower(0.26);
-
+    //deposit element onto shipping hub
+        dropper.setPosition(0.0);
+        sleep(3000);
+        dropper.setPosition(0.9);
         sleep(2000);
+
+    //tank turn
+        leftFront.setPower(0.26);
+        rightFront.setPower(-0.26);
+        leftBack.setPower(0.26);
+        rightBack.setPower(-0.26);
+
+        sleep(2100);
 
         leftFront.setPower(0.0);
         rightFront.setPower(0.0);
@@ -150,10 +158,23 @@ public class WarehousePark_BLUE extends LinearOpMode {
         leftBack.setPower(0.0);
         rightBack.setPower(0.0);
 
+    //going a little backwards
+        leftFront.setPower(0.2);
+        rightFront.setPower(0.2);
+        leftBack.setPower(0.2);
+        rightBack.setPower(0.2);
+
+        sleep(1000);
+
+        leftFront.setPower(0.0);
+        rightFront.setPower(0.0);
+        leftBack.setPower(0.0);
+        rightBack.setPower(0.0);
+
     //collector starts
 
         collector.setPower (-0.9);
-        sleep(3500);
+        sleep(3300);
         collector.setPower(0.0);
 
 

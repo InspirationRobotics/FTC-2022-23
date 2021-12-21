@@ -32,6 +32,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 
@@ -59,6 +60,7 @@ public class CarouselPark_BLUE extends LinearOpMode {
     DcMotor leftBack;
     DcMotor rightBack;
     DcMotor spinner;
+    Servo dropper;
 
     double power = 0.5;
     @Override
@@ -71,12 +73,45 @@ public class CarouselPark_BLUE extends LinearOpMode {
         rightFront = hardwareMap.dcMotor.get("rightFront");
         rightBack = hardwareMap.dcMotor.get("rightBack");
         spinner = hardwareMap.dcMotor.get("spinner");
+        dropper = hardwareMap.servo.get("dropper");
 
         leftFront.setDirection(DcMotor.Direction.REVERSE);
         leftBack.setDirection(DcMotor.Direction.REVERSE);
 
         waitForStart();
         runtime.reset();
+
+        //going backward
+        leftFront.setPower(-0.21);
+        rightFront.setPower(-0.21);
+        leftBack.setPower(-0.21);
+        rightBack.setPower(-0.21);
+
+        sleep(2050);
+
+        leftFront.setPower(0.0);
+        rightFront.setPower(0.0);
+        leftBack.setPower(0.0);
+        rightBack.setPower(0.0);
+
+    //deposit element onto shipping hub
+        dropper.setPosition(0.0);
+        sleep(3000);
+        dropper.setPosition(0.9);
+        sleep(2000);
+
+    //going forward
+        leftFront.setPower(0.22);
+        rightFront.setPower(0.22);
+        leftBack.setPower(0.22);
+        rightBack.setPower(0.22);
+
+        sleep(2060);
+
+        leftFront.setPower(0.0);
+        rightFront.setPower(0.0);
+        leftBack.setPower(0.0);
+        rightBack.setPower(0.0);
 
     //backwards
         leftFront.setPower(-0.1);
@@ -92,12 +127,25 @@ public class CarouselPark_BLUE extends LinearOpMode {
         rightBack.setPower(0.0);
 
     //strafe to left
-        leftFront.setPower(0.3);
-        rightFront.setPower(0.3);
-        leftBack.setPower(-0.3);
-        rightBack.setPower(-0.3);
+        leftFront.setPower(0.5);
+        rightFront.setPower(0.5);
+        leftBack.setPower(-0.5);
+        rightBack.setPower(-0.5);
 
-        sleep(2000);
+        sleep(2100);
+
+        leftFront.setPower(0.0);
+        rightFront.setPower(0.0);
+        leftBack.setPower(0.0);
+        rightBack.setPower(0.0);
+
+    //going forward slightly
+        leftFront.setPower(0.1);
+        rightFront.setPower(0.1);
+        leftBack.setPower(0.1);
+        rightBack.setPower(0.1);
+
+        sleep(600);
 
         leftFront.setPower(0.0);
         rightFront.setPower(0.0);
@@ -134,7 +182,7 @@ public class CarouselPark_BLUE extends LinearOpMode {
         leftBack.setPower(-0.2);
         rightBack.setPower(-0.2);
 
-        sleep(2000);
+        sleep(6000);
 
         leftFront.setPower(0.0);
         rightFront.setPower(0.0);
