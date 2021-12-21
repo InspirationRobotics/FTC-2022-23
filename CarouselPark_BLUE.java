@@ -81,7 +81,20 @@ public class CarouselPark_BLUE extends LinearOpMode {
         waitForStart();
         runtime.reset();
 
-        //going backward
+        //strafe to right
+        leftFront.setPower(-0.4);
+        rightFront.setPower(-0.4);
+        leftBack.setPower(0.4);
+        rightBack.setPower(0.4);
+
+        sleep(1800);
+
+        leftFront.setPower(0.0);
+        rightFront.setPower(0.0);
+        leftBack.setPower(0.0);
+        rightBack.setPower(0.0);
+
+    //going backward
         leftFront.setPower(-0.21);
         rightFront.setPower(-0.21);
         leftBack.setPower(-0.21);
@@ -97,8 +110,8 @@ public class CarouselPark_BLUE extends LinearOpMode {
     //deposit element onto shipping hub
         dropper.setPosition(0.0);
         sleep(3000);
-        dropper.setPosition(0.9);
-        sleep(2000);
+        dropper.setPosition(1.0);
+        sleep(3000);
 
     //going forward
         leftFront.setPower(0.22);
@@ -155,12 +168,12 @@ public class CarouselPark_BLUE extends LinearOpMode {
 
     //spinner starts
         spinner.setPower(0.35);
-        sleep(1000);
+        sleep(1500);
         spinner.setPower(0.0);
 
     //spins faster
         spinner.setPower(0.6);
-        sleep(4000);
+        sleep(2500);
         spinner.setPower(0.0);
 
     //backwards
