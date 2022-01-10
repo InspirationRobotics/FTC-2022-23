@@ -32,6 +32,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 
@@ -58,6 +59,8 @@ public class WarehousePark_RED extends LinearOpMode {
     DcMotor rightFront;
     DcMotor leftBack;
     DcMotor rightBack;
+    DcMotor collector;
+    Servo dropper;
 
     double power = 0.5;
     @Override
@@ -69,6 +72,8 @@ public class WarehousePark_RED extends LinearOpMode {
         leftBack = hardwareMap.dcMotor.get("leftBack");
         rightFront = hardwareMap.dcMotor.get("rightFront");
         rightBack = hardwareMap.dcMotor.get("rightBack");
+        collector = hardwareMap.dcMotor.get("collector");
+        dropper = hardwareMap.servo.get("dropper");
 
         leftFront.setDirection(DcMotor.Direction.REVERSE);
         leftBack.setDirection(DcMotor.Direction.REVERSE);
@@ -76,26 +81,65 @@ public class WarehousePark_RED extends LinearOpMode {
         waitForStart();
         runtime.reset();
 
-        //going forward
-        leftFront.setPower(0.2);
-        rightFront.setPower(0.2);
-        leftBack.setPower(0.2);
-        rightBack.setPower(0.2);
+        //deposit element onto shipping hub
+        dropper.setPosition(0.5);
+        sleep(3000);
 
-        sleep(2000);
+        //going backward
+        leftFront.setPower(-0.22);
+        rightFront.setPower(-0.22);
+        leftBack.setPower(-0.22);
+        rightBack.setPower(-0.22);
+
+        sleep(2050);
 
         leftFront.setPower(0.0);
         rightFront.setPower(0.0);
         leftBack.setPower(0.0);
         rightBack.setPower(0.0);
+
+        //deposit element onto shipping hub
+        dropper.setPosition(0.0);
+        sleep(2000);
+        dropper.setPosition(0.5);
+        sleep(2000);
+
+        //going forward
+        leftFront.setPower(0.23);
+        rightFront.setPower(0.23);
+        leftBack.setPower(0.23);
+        rightBack.setPower(0.23);
+
+        sleep(2600);
+
+        leftFront.setPower(0.0);
+        rightFront.setPower(0.0);
+        leftBack.setPower(0.0);
+        rightBack.setPower(0.0);
+
+        //going back
+        leftFront.setPower(-0.23);
+        rightFront.setPower(-0.23);
+        leftBack.setPower(-0.23);
+        rightBack.setPower(-0.23);
+
+        sleep(2600);
+
+        leftFront.setPower(0.0);
+        rightFront.setPower(0.0);
+        leftBack.setPower(0.0);
+        rightBack.setPower(0.0);
+// bringing dropper back
+        dropper.setPosition(0.9);
+        sleep(2000);
 
         //tank turn
-        leftFront.setPower(-1*-0.26);
-        rightFront.setPower(-1*0.26);
-        leftBack.setPower(-1*-0.26);
-        rightBack.setPower(-1*0.26);
+        leftFront.setPower(-1*0.234);
+        rightFront.setPower(-1*-0.234);
+        leftBack.setPower(-1*0.234);
+        rightBack.setPower(-1*-0.234);
 
-        sleep(2000);
+        sleep(2100);
 
         leftFront.setPower(0.0);
         rightFront.setPower(0.0);
@@ -104,10 +148,24 @@ public class WarehousePark_RED extends LinearOpMode {
 
         //going forward
 
-        leftFront.setPower(0.9);
-        rightFront.setPower(0.9);
-        leftBack.setPower(0.9);
-        rightBack.setPower(0.9);
+        leftFront.setPower(1.0);
+        rightFront.setPower(1.0);
+        leftBack.setPower(1.0);
+        rightBack.setPower(1.0);
+
+        sleep(950);
+
+        leftFront.setPower(0.0);
+        rightFront.setPower(0.0);
+        leftBack.setPower(0.0);
+        rightBack.setPower(0.0);
+
+        //going forward, but slowing it down.
+
+        leftFront.setPower(0.3);
+        rightFront.setPower(0.3);
+        leftBack.setPower(0.3);
+        rightBack.setPower(0.3);
 
         sleep(1500);
 
@@ -115,6 +173,45 @@ public class WarehousePark_RED extends LinearOpMode {
         rightFront.setPower(0.0);
         leftBack.setPower(0.0);
         rightBack.setPower(0.0);
+
+        //strafe to left
+        leftFront.setPower(-1*0.2);
+        rightFront.setPower(-1*0.2);
+        leftBack.setPower(-1*-0.2);
+        rightBack.setPower(-1*-0.2);
+
+        sleep(2000);
+
+        leftFront.setPower(0.0);
+        rightFront.setPower(0.0);
+        leftBack.setPower(0.0);
+        rightBack.setPower(0.0);
+
+        //going a little backwards
+        leftFront.setPower(0.2);
+        rightFront.setPower(0.2);
+        leftBack.setPower(0.2);
+        rightBack.setPower(0.2);
+
+        sleep(1000);
+
+        leftFront.setPower(0.0);
+        rightFront.setPower(0.0);
+        leftBack.setPower(0.0);
+        rightBack.setPower(0.0);
+
+        //collector intakes
+
+        collector.setPower (-0.9);
+        sleep(3300);
+        collector.setPower(0.0);
+
+        //collector outakes
+
+        collector.setPower (0.7);
+        sleep(3300);
+        collector.setPower(0.0);
+
 
 
 
