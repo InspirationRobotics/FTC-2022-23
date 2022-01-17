@@ -62,6 +62,8 @@ public class HardwarePushbot
     public DcMotor  collector   = null;
     public DcMotor  extender    = null;
     public Servo    dropper     = null;
+    public Servo flipperLeft = null;
+    public Servo flipperRight = null;
 
     /* local OpMode members. */
     HardwareMap hwMap           =  null;
@@ -87,6 +89,8 @@ public class HardwarePushbot
         collector = hwMap.get(DcMotor.class, "collector");
         extender = hwMap.get(DcMotor.class, "extender");
         dropper = hwMap.get(Servo.class, "dropper");
+        flipperLeft = hwMap.get(Servo.class, "flipperLeft");
+        flipperRight = hwMap.get(Servo.class, "flipperRight");
         leftFront.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
         leftBack.setDirection(DcMotor.Direction.FORWARD);
         rightFront.setDirection(DcMotor.Direction.FORWARD);// Set to FORWARD if using AndyMark motors

@@ -40,7 +40,7 @@ import com.qualcomm.robotcore.util.Range;
 public class PushbotTeleopTank_Iterative extends OpMode{
 
     public static final double SERVO_POSITION = 0.0;
-    public static final double SERVO_RETRACTED_POSITION = 0.9;
+    public static final double SERVO_RETRACTED_POSITION = 0.3;
 
     /* Declare OpMode members. */
     HardwarePushbot robot       = new HardwarePushbot(); // use the class created to define a Pushbot's hardware
@@ -86,21 +86,21 @@ public class PushbotTeleopTank_Iterative extends OpMode{
         robot.leftBack.setPower(gamepad1.left_stick_y);
         robot.rightBack.setPower(-gamepad1.right_stick_y);
 
-        if (gamepad1.left_trigger >= 0.5 && gamepad1.right_trigger < 0.5) {
+        if (gamepad1.left_trigger >= 1.0 && gamepad1.right_trigger < 1.0) {
             // right trigger is not pressed value of 0
             // left trigger is pressed values greater than 0.5
-            robot.leftFront.setPower(-0.5);
-            robot.rightFront.setPower(0.5);
-            robot.leftBack.setPower(0.5);
-            robot.rightBack.setPower(-0.5);
+            robot.leftFront.setPower(-1.0);
+            robot.rightFront.setPower(1.0);
+            robot.leftBack.setPower(1.0);
+            robot.rightBack.setPower(-1.0);
 
-        } else if (gamepad1.left_trigger < 0.5 && gamepad1.right_trigger >= 0.5) {
+        } else if (gamepad1.left_trigger < 1.0 && gamepad1.right_trigger >= 1.0) {
             // right trigger is pressed value greater than 0.5
             // left trigger is not pressed value of 0
-            robot.leftFront.setPower(0.5);
-            robot.rightFront.setPower(-0.5);
-            robot.leftBack.setPower(-0.5);
-            robot.rightBack.setPower(0.5);
+            robot.leftFront.setPower(1.0);
+            robot.rightFront.setPower(-1.0);
+            robot.leftBack.setPower(-1.0);
+            robot.rightBack.setPower(1.0);
         } else {
             robot.leftFront.setPower(0);
             robot.rightFront.setPower(0);
@@ -127,12 +127,26 @@ public class PushbotTeleopTank_Iterative extends OpMode{
       }
        robot.extender.setPower(-gamepad2.left_stick_y);
 
-        if(gamepad2.left_trigger > 0.8){
+        if(gamepad2.left_trigger > 0.1){
             robot.dropper.setPosition(SERVO_POSITION);
         }
 
-        if(gamepad2.right_trigger > 0.8){
+        if(gamepad2.right_trigger > 0.1){
             robot.dropper.setPosition(SERVO_RETRACTED_POSITION);
+        }
+
+        if (gamepad2.dpad_down) {
+            robot.flipperLeft.setPosition(0.5);
+            robot.flipperRight.setPosition(0);
+            robot.dropper.setPosition(1);
+        }
+
+        if (gamepad2.dpad_up){
+            robot.flipperLeft.setPosition(0.0);
+            robot.flipperRight.setPosition(0.5);
+            robot.dropper.setPosition(0.3);
+
+
         }
 
     }
@@ -141,6 +155,8 @@ public class PushbotTeleopTank_Iterative extends OpMode{
     /*
      * Code to run ONCE after the driver hits STOP
      */
+
+
 
     @Override
     public void stop() {

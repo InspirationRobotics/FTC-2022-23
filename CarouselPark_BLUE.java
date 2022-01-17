@@ -81,13 +81,13 @@ public class CarouselPark_BLUE extends LinearOpMode {
         waitForStart();
         runtime.reset();
 
-        //strafe to right
-        leftFront.setPower(-0.4);
-        rightFront.setPower(-0.4);
-        leftBack.setPower(0.4);
-        rightBack.setPower(0.4);
+    //strafe to right
+        leftFront.setPower(-0.5);
+        rightFront.setPower(-0.5);
+        leftBack.setPower(0.5);
+        rightBack.setPower(0.5);
 
-        sleep(1800);
+        sleep(1700);
 
         leftFront.setPower(0.0);
         rightFront.setPower(0.0);
@@ -95,10 +95,10 @@ public class CarouselPark_BLUE extends LinearOpMode {
         rightBack.setPower(0.0);
 
     //going backward
-        leftFront.setPower(-0.21);
-        rightFront.setPower(-0.21);
-        leftBack.setPower(-0.21);
-        rightBack.setPower(-0.21);
+        leftFront.setPower(-0.23);
+        rightFront.setPower(-0.23);
+        leftBack.setPower(-0.23);
+        rightBack.setPower(-0.23);
 
         sleep(2050);
 
@@ -107,11 +107,29 @@ public class CarouselPark_BLUE extends LinearOpMode {
         leftBack.setPower(0.0);
         rightBack.setPower(0.0);
 
-    //deposit element onto shipping hub
-        dropper.setPosition(0.0);
+        //deposit element onto shipping hub
+        dropper.setPosition(0.1);
+        sleep(2000);
+        dropper.setPosition(0.4);
+        sleep(2000);
+
+        //set dropper back into position
+        dropper.setPosition(1.2);
         sleep(3000);
-        dropper.setPosition(1.0);
-        sleep(3000);
+
+    //going forward
+        leftFront.setPower(0.4);
+        rightFront.setPower(0.4);
+        leftBack.setPower(0.4);
+        rightBack.setPower(0.4);
+
+        sleep(1000);
+
+        leftFront.setPower(0.0);
+        rightFront.setPower(0.0);
+        leftBack.setPower(0.0);
+        rightBack.setPower(0.0);
+
 
     //going forward
         leftFront.setPower(0.22);
@@ -145,26 +163,25 @@ public class CarouselPark_BLUE extends LinearOpMode {
         leftBack.setPower(-0.5);
         rightBack.setPower(-0.5);
 
-        sleep(2100);
+        sleep(2400);
 
         leftFront.setPower(0.0);
         rightFront.setPower(0.0);
         leftBack.setPower(0.0);
         rightBack.setPower(0.0);
 
-    //going forward slightly
+        //going forward
         leftFront.setPower(0.1);
         rightFront.setPower(0.1);
         leftBack.setPower(0.1);
         rightBack.setPower(0.1);
 
-        sleep(600);
+        sleep(780);
 
         leftFront.setPower(0.0);
         rightFront.setPower(0.0);
         leftBack.setPower(0.0);
         rightBack.setPower(0.0);
-
 
     //spinner starts
         spinner.setPower(0.35);
@@ -172,17 +189,17 @@ public class CarouselPark_BLUE extends LinearOpMode {
         spinner.setPower(0.0);
 
     //spins faster
-        spinner.setPower(0.6);
-        sleep(2500);
+        spinner.setPower(0.8);
+        sleep(2000);
         spinner.setPower(0.0);
 
     //backwards
-        leftFront.setPower(-0.2);
-        rightFront.setPower(-0.2);
-        leftBack.setPower(-0.2);
-        rightBack.setPower(-0.2);
+        leftFront.setPower(-0.22);
+        rightFront.setPower(-0.22);
+        leftBack.setPower(-0.22);
+        rightBack.setPower(-0.22);
 
-        sleep(2000);
+        sleep(1680);
 
         leftFront.setPower(0.0);
         rightFront.setPower(0.0);
@@ -190,10 +207,10 @@ public class CarouselPark_BLUE extends LinearOpMode {
         rightBack.setPower(0.0);
 
     //strafe to left
-        leftFront.setPower(0.2);
-        rightFront.setPower(0.2);
-        leftBack.setPower(-0.2);
-        rightBack.setPower(-0.2);
+        leftFront.setPower(0.5);
+        rightFront.setPower(0.5);
+        leftBack.setPower(-0.5);
+        rightBack.setPower(-0.5);
 
         sleep(6000);
 

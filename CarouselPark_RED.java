@@ -32,6 +32,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 
@@ -58,8 +59,11 @@ public class CarouselPark_RED extends LinearOpMode {
     DcMotor rightFront;
     DcMotor leftBack;
     DcMotor rightBack;
+    DcMotor spinner;
+    Servo dropper;
 
     double power = 0.5;
+
     @Override
     public void runOpMode() {
         telemetry.addData("Status", "Initialized");
@@ -69,6 +73,8 @@ public class CarouselPark_RED extends LinearOpMode {
         leftBack = hardwareMap.dcMotor.get("leftBack");
         rightFront = hardwareMap.dcMotor.get("rightFront");
         rightBack = hardwareMap.dcMotor.get("rightBack");
+        spinner = hardwareMap.dcMotor.get("spinner");
+        dropper = hardwareMap.servo.get("dropper");
 
         leftFront.setDirection(DcMotor.Direction.REVERSE);
         leftBack.setDirection(DcMotor.Direction.REVERSE);
@@ -76,26 +82,17 @@ public class CarouselPark_RED extends LinearOpMode {
         waitForStart();
         runtime.reset();
 
+
+        waitForStart();
+        runtime.reset();
+
         //strafe to right
-        leftFront.setPower(-1*-0.35);
-        rightFront.setPower(-1*-0.35);
-        leftBack.setPower(-1*0.35);
-        rightBack.setPower(-1*0.35);
+        leftFront.setPower(-1*-0.4);
+        rightFront.setPower(-1*-0.4);
+        leftBack.setPower(-1*0.4);
+        rightBack.setPower(-1*0.4);
 
-        sleep(2000);
-
-        leftFront.setPower(0.0);
-        rightFront.setPower(0.0);
-        leftBack.setPower(0.0);
-        rightBack.setPower(0.0);
-
-     //forward
-        leftFront.setPower(0.3);
-        rightFront.setPower(0.3);
-        leftBack.setPower(0.3);
-        rightBack.setPower(0.3);
-
-        sleep(2000);
+        sleep(2200);
 
         leftFront.setPower(0.0);
         rightFront.setPower(0.0);
@@ -103,9 +100,129 @@ public class CarouselPark_RED extends LinearOpMode {
         rightBack.setPower(0.0);
 
 
+        //going backward
+        leftFront.setPower(-0.21);
+        rightFront.setPower(-0.21);
+        leftBack.setPower(-0.21);
+        rightBack.setPower(-0.21);
 
+        sleep(2300);
+
+        leftFront.setPower(0.0);
+        rightFront.setPower(0.0);
+        leftBack.setPower(0.0);
+        rightBack.setPower(0.0);
+
+        //deposit element onto shipping hub
+        dropper.setPosition(0.1);
+        sleep(2000);
+        dropper.setPosition(0.9);
+        sleep(3000);
+
+        //going forward
+        leftFront.setPower(0.23);
+        rightFront.setPower(0.23);
+        leftBack.setPower(0.23);
+        rightBack.setPower(0.23);
+
+        sleep(2600);
+
+        leftFront.setPower(0.0);
+        rightFront.setPower(0.0);
+        leftBack.setPower(0.0);
+        rightBack.setPower(0.0);
+
+        //backwards
+        leftFront.setPower(-0.1);
+        rightFront.setPower(-0.1);
+        leftBack.setPower(-0.1);
+        rightBack.setPower(-0.1);
+
+        sleep(1000);
+
+        leftFront.setPower(0.0);
+        rightFront.setPower(0.0);
+        leftBack.setPower(0.0);
+        rightBack.setPower(0.0);
+
+        //tank turn 90 degrees to right
+        leftFront.setPower(-1*-0.25);
+        rightFront.setPower(-1*0.25);
+        leftBack.setPower(-1*-0.25);
+        rightBack.setPower(-1*0.25);
+
+        sleep(2500);
+
+        leftFront.setPower(0.0);
+        rightFront.setPower(0.0);
+        leftBack.setPower(0.0);
+        rightBack.setPower(0.0);
+
+        //going forward
+        leftFront.setPower(0.316);
+        rightFront.setPower(0.316);
+        leftBack.setPower(0.316);
+        rightBack.setPower(0.316);
+
+        sleep(2900);
+
+        leftFront.setPower(0.0);
+        rightFront.setPower(0.0);
+        leftBack.setPower(0.0);
+        rightBack.setPower(0.0);
+
+        //strafe to left
+        leftFront.setPower(-1*-0.3);
+        rightFront.setPower(-1*-0.3);
+        leftBack.setPower(-1*0.3);
+        rightBack.setPower(-1*0.3);
+
+        sleep(1100);
+
+        leftFront.setPower(0.0);
+        rightFront.setPower(0.0);
+        leftBack.setPower(0.0);
+        rightBack.setPower(0.0);
+
+        //spinner starts
+        spinner.setPower(-0.35);
+        sleep(1200);
+        spinner.setPower(0.0);
+
+        //spins faster
+        spinner.setPower(-0.8);
+        sleep(2500);
+        spinner.setPower(0.0);
+
+        //strafe to right
+        leftFront.setPower(-1*0.343);
+        rightFront.setPower(-1*0.343);
+        leftBack.setPower(-1*-0.343);
+        rightBack.setPower(-1*-0.343);
+
+        sleep(1800);
+
+        leftFront.setPower(0.0);
+        rightFront.setPower(0.0);
+        leftBack.setPower(0.0);
+        rightBack.setPower(0.0);
+
+        //going forward
+        leftFront.setPower(0.32);
+        rightFront.setPower(0.32);
+        leftBack.setPower(0.32);
+        rightBack.setPower(0.32);
+
+        sleep(2000);
+
+        leftFront.setPower(0.0);
+        rightFront.setPower(0.0);
+        leftBack.setPower(0.0);
+        rightBack.setPower(0.0);
 
 
 
     }
 }
+
+
