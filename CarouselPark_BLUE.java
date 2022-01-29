@@ -147,7 +147,7 @@ public class CarouselPark_BLUE extends LinearOpMode {
         leftBack.setPower(0.4);
         rightBack.setPower(0.4);
 
-        sleep(2000);
+        sleep(1000);
 
         leftFront.setPower(0.0);
         rightFront.setPower(0.0);
@@ -160,7 +160,7 @@ public class CarouselPark_BLUE extends LinearOpMode {
         leftBack.setPower(-0.4);
         rightBack.setPower(-0.4);
 
-        sleep(2900);
+        sleep(1900);
 
         leftFront.setPower(0.0);
         rightFront.setPower(0.0);
