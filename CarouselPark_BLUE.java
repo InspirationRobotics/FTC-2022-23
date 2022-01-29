@@ -34,6 +34,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import org.firstinspires.ftc.teamcode.EncoderEx;
 
 
 /**
@@ -81,13 +82,13 @@ public class CarouselPark_BLUE extends LinearOpMode {
         waitForStart();
         runtime.reset();
 
-    //strafe to right
-        leftFront.setPower(-0.5);
+  //strafe to right
+        leftFront.setPower(0.5);
         rightFront.setPower(-0.5);
-        leftBack.setPower(0.5);
+        leftBack.setPower(-0.5);
         rightBack.setPower(0.5);
 
-        sleep(1700);
+        sleep(1100);
 
         leftFront.setPower(0.0);
         rightFront.setPower(0.0);
@@ -100,7 +101,7 @@ public class CarouselPark_BLUE extends LinearOpMode {
         leftBack.setPower(-0.23);
         rightBack.setPower(-0.23);
 
-        sleep(2050);
+        sleep(1900);
 
         leftFront.setPower(0.0);
         rightFront.setPower(0.0);
@@ -108,49 +109,32 @@ public class CarouselPark_BLUE extends LinearOpMode {
         rightBack.setPower(0.0);
 
         //deposit element onto shipping hub
-        dropper.setPosition(0.1);
+        dropper.setPosition(1.0);
         sleep(2000);
-        dropper.setPosition(0.4);
-        sleep(2000);
-
         //set dropper back into position
-        dropper.setPosition(1.2);
+        dropper.setPosition(0);
         sleep(3000);
 
     //going forward
-        leftFront.setPower(0.4);
-        rightFront.setPower(0.4);
-        leftBack.setPower(0.4);
-        rightBack.setPower(0.4);
+        leftFront.setPower(0.25);
+        rightFront.setPower(0.25);
+        leftBack.setPower(0.25);
+        rightBack.setPower(0.25);
 
-        sleep(1000);
-
-        leftFront.setPower(0.0);
-        rightFront.setPower(0.0);
-        leftBack.setPower(0.0);
-        rightBack.setPower(0.0);
-
-
-    //going forward
-        leftFront.setPower(0.22);
-        rightFront.setPower(0.22);
-        leftBack.setPower(0.22);
-        rightBack.setPower(0.22);
-
-        sleep(2060);
+        sleep(1500);
 
         leftFront.setPower(0.0);
         rightFront.setPower(0.0);
         leftBack.setPower(0.0);
         rightBack.setPower(0.0);
 
-    //backwards
+        //going backward
         leftFront.setPower(-0.1);
         rightFront.setPower(-0.1);
         leftBack.setPower(-0.1);
         rightBack.setPower(-0.1);
 
-        sleep(2000);
+        sleep(1700);
 
         leftFront.setPower(0.0);
         rightFront.setPower(0.0);
@@ -158,25 +142,38 @@ public class CarouselPark_BLUE extends LinearOpMode {
         rightBack.setPower(0.0);
 
     //strafe to left
-        leftFront.setPower(0.5);
+        leftFront.setPower(-0.5);
         rightFront.setPower(0.5);
-        leftBack.setPower(-0.5);
+        leftBack.setPower(0.5);
         rightBack.setPower(-0.5);
 
-        sleep(2400);
+        sleep(1500);
 
         leftFront.setPower(0.0);
         rightFront.setPower(0.0);
         leftBack.setPower(0.0);
         rightBack.setPower(0.0);
 
-        //going forward
-        leftFront.setPower(0.1);
-        rightFront.setPower(0.1);
-        leftBack.setPower(0.1);
-        rightBack.setPower(0.1);
+        //going back
+        leftFront.setPower(-0.1);
+        rightFront.setPower(-0.1);
+        leftBack.setPower(-0.1);
+        rightBack.setPower(-0.1);
 
-        sleep(780);
+        sleep(500);
+
+        leftFront.setPower(0.0);
+        rightFront.setPower(0.0);
+        leftBack.setPower(0.0);
+        rightBack.setPower(0.0);
+
+        //strafe to left
+        leftFront.setPower(-0.5);
+        rightFront.setPower(0.5);
+        leftBack.setPower(0.5);
+        rightBack.setPower(-0.5);
+
+        sleep(1000);
 
         leftFront.setPower(0.0);
         rightFront.setPower(0.0);
@@ -193,36 +190,47 @@ public class CarouselPark_BLUE extends LinearOpMode {
         sleep(2000);
         spinner.setPower(0.0);
 
-    //backwards
+        //backwards
         leftFront.setPower(-0.22);
         rightFront.setPower(-0.22);
         leftBack.setPower(-0.22);
         rightBack.setPower(-0.22);
 
-        sleep(1680);
+        sleep(1000);
 
         leftFront.setPower(0.0);
         rightFront.setPower(0.0);
         leftBack.setPower(0.0);
         rightBack.setPower(0.0);
 
-    //strafe to left
-        leftFront.setPower(0.5);
-        rightFront.setPower(0.5);
-        leftBack.setPower(-0.5);
-        rightBack.setPower(-0.5);
+        //strafe to left
+        leftFront.setPower(-0.3);
+        rightFront.setPower(0.3);
+        leftBack.setPower(0.3);
+        rightBack.setPower(-0.3);
 
-        sleep(6000);
+        sleep(1100);
 
         leftFront.setPower(0.0);
         rightFront.setPower(0.0);
         leftBack.setPower(0.0);
         rightBack.setPower(0.0);
 
+    //backwards
+        leftFront.setPower(-0.15);
+        rightFront.setPower(-0.15);
+        leftBack.setPower(-0.15);
+        rightBack.setPower(-0.15);
 
+        sleep(1500);
 
-
+        leftFront.setPower(0.0);
+        rightFront.setPower(0.0);
+        leftBack.setPower(0.0);
+        rightBack.setPower(0.0);
 
 
     }
 }
+
+

@@ -81,13 +81,13 @@ public class WarehousePark_RED extends LinearOpMode {
         waitForStart();
         runtime.reset();
 
-        //strafe to left
+        //strafe to right
         leftFront.setPower(-1*0.4);
-        rightFront.setPower(-1*0.4);
+        rightFront.setPower(-1*-0.4);
         leftBack.setPower(-1*-0.4);
-        rightBack.setPower(-1*-0.4);
+        rightBack.setPower(-1*0.4);
 
-        sleep(1800);
+        sleep(2600);
 
         leftFront.setPower(0.0);
         rightFront.setPower(0.0);
@@ -95,29 +95,10 @@ public class WarehousePark_RED extends LinearOpMode {
         rightBack.setPower(0.0);
 
         //going backward
-        leftFront.setPower(-0.21);
-        rightFront.setPower(-0.21);
-        leftBack.setPower(-0.21);
-        rightBack.setPower(-0.21);
-
-        sleep(2100);
-
-        leftFront.setPower(0.0);
-        rightFront.setPower(0.0);
-        leftBack.setPower(0.0);
-        rightBack.setPower(0.0);
-
-        //deposit element onto shipping hub
-        dropper.setPosition(0.0);
-        sleep(2000);
-        dropper.setPosition(0.5);
-        sleep(2000);
-
-        //going forward
-        leftFront.setPower(0.22);
-        rightFront.setPower(0.22);
-        leftBack.setPower(0.22);
-        rightBack.setPower(0.22);
+        leftFront.setPower(-0.22);
+        rightFront.setPower(-0.22);
+        leftBack.setPower(-0.22);
+        rightBack.setPower(-0.22);
 
         sleep(1000);
 
@@ -126,31 +107,20 @@ public class WarehousePark_RED extends LinearOpMode {
         leftBack.setPower(0.0);
         rightBack.setPower(0.0);
 
-// bringing dropper back
-        dropper.setPosition(0.9);
+        //deposit element onto shipping hub
+        dropper.setPosition(1);
+        sleep(2000);
+        // bringing dropper back
+        dropper.setPosition(0.0);
         sleep(2000);
 
-        //tank turn
-        leftFront.setPower(-1*0.235);
-        rightFront.setPower(-1*-0.235);
-        leftBack.setPower(-1*0.235);
-        rightBack.setPower(-1*-0.235);
-
-        sleep(2500);
-
-        leftFront.setPower(0.0);
-        rightFront.setPower(0.0);
-        leftBack.setPower(0.0);
-        rightBack.setPower(0.0);
-
         //going forward
+        leftFront.setPower(0.22);
+        rightFront.setPower(0.22);
+        leftBack.setPower(0.22);
+        rightBack.setPower(0.22);
 
-        leftFront.setPower(0.5);
-        rightFront.setPower(0.5);
-        leftBack.setPower(0.8);
-        rightBack.setPower(0.8);
-
-        sleep(2100);
+        sleep(1500);
 
         leftFront.setPower(0.0);
         rightFront.setPower(0.0);
@@ -158,12 +128,51 @@ public class WarehousePark_RED extends LinearOpMode {
         rightBack.setPower(0.0);
 
         //strafe to left
-        leftFront.setPower(-1*-0.4);
-        rightFront.setPower(-1*-0.4);
-        leftBack.setPower(-1*0.4);
-        rightBack.setPower(-1*0.4);
+        leftFront.setPower(-1*-0.3);
+        rightFront.setPower(-1*0.3);
+        leftBack.setPower(-1*0.25);
+        rightBack.setPower(-1*-0.3);
+
+        sleep(1500);
+
+        leftFront.setPower(0.0);
+        rightFront.setPower(0.0);
+        leftBack.setPower(0.0);
+        rightBack.setPower(0.0);
+
+        //going backward
+        leftFront.setPower(-0.1);
+        rightFront.setPower(-0.1);
+        leftBack.setPower(-0.1);
+        rightBack.setPower(-0.1);
+
+        sleep(500);
+
+        leftFront.setPower(0.0);
+        rightFront.setPower(0.0);
+        leftBack.setPower(0.0);
+        rightBack.setPower(0.0);
+
+        //strafe to left
+        leftFront.setPower(-1*-0.5);
+        rightFront.setPower(-1*0.5);
+        leftBack.setPower(-1*0.5);
+        rightBack.setPower(-1*-0.5);
 
         sleep(1800);
+
+        leftFront.setPower(0.0);
+        rightFront.setPower(0.0);
+        leftBack.setPower(0.0);
+        rightBack.setPower(0.0);
+
+        //going forward
+        leftFront.setPower(0.5);
+        rightFront.setPower(0.5);
+        leftBack.setPower(0.5);
+        rightBack.setPower(0.5);
+
+        sleep(2300);
 
         leftFront.setPower(0.0);
         rightFront.setPower(0.0);
@@ -173,17 +182,14 @@ public class WarehousePark_RED extends LinearOpMode {
         //collector intakes
 
         collector.setPower (-0.9);
-        sleep(3300);
+        sleep(3100);
         collector.setPower(0.0);
 
-        //collector outake
+        //collector outakes
 
         collector.setPower (0.7);
         sleep(3300);
         collector.setPower(0.0);
-
-
-
 
 
 

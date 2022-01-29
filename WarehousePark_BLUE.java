@@ -1,4 +1,4 @@
-/* Copyright (c) 2017 FIRST. All rights reserved.
+package org.firstinspires.ftc.teamcode;/* Copyright (c) 2017 FIRST. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted (subject to the limitations in the disclaimer below) provided that
@@ -27,7 +27,8 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.teamcode;
+//*
+// package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
@@ -87,13 +88,13 @@ public class WarehousePark_BLUE extends LinearOpMode {
         waitForStart();
         runtime.reset();
 
-        //strafe to left
+        //strafe to right
         leftFront.setPower(0.4);
-        rightFront.setPower(0.4);
+        rightFront.setPower(-0.4);
         leftBack.setPower(-0.4);
-        rightBack.setPower(-0.4);
+        rightBack.setPower(0.4);
 
-        sleep(1900);
+        sleep(2600);
 
         leftFront.setPower(0.0);
         rightFront.setPower(0.0);
@@ -106,7 +107,7 @@ public class WarehousePark_BLUE extends LinearOpMode {
         leftBack.setPower(-0.22);
         rightBack.setPower(-0.22);
 
-        sleep(2100);
+        sleep(1000);
 
         leftFront.setPower(0.0);
         rightFront.setPower(0.0);
@@ -114,85 +115,81 @@ public class WarehousePark_BLUE extends LinearOpMode {
         rightBack.setPower(0.0);
 
         //deposit element onto shipping hub
-        dropper.setPosition(0.0);
+        dropper.setPosition(1);
         sleep(2000);
-        dropper.setPosition(0.5);
+        // bringing dropper back
+        dropper.setPosition(0.0);
         sleep(2000);
 
         //going forward
-        leftFront.setPower(0.15);
-        rightFront.setPower(0.15);
-        leftBack.setPower(0.15);
-        rightBack.setPower(0.15);
+        leftFront.setPower(0.22);
+        rightFront.setPower(0.22);
+        leftBack.setPower(0.22);
+        rightBack.setPower(0.22);
 
-        sleep(1000);
-
-        leftFront.setPower(0.0);
-        rightFront.setPower(0.0);
-        leftBack.setPower(0.0);
-        rightBack.setPower(0.0);
-
-// bringing dropper back
-        dropper.setPosition(0.9);
-        sleep(2000);
-
-    //tank turn
-        leftFront.setPower(0.238);
-        rightFront.setPower(-0.238);
-        leftBack.setPower(0.238);
-        rightBack.setPower(-0.238);
-
-        sleep(2500);
+        sleep(1500);
 
         leftFront.setPower(0.0);
         rightFront.setPower(0.0);
         leftBack.setPower(0.0);
         rightBack.setPower(0.0);
 
-    //going forward
+        //strafe to left
+        leftFront.setPower(-0.3);
+        rightFront.setPower(0.3);
+        leftBack.setPower(0.25);
+        rightBack.setPower(-0.3);
 
+        sleep(1500);
+
+        leftFront.setPower(0.0);
+        rightFront.setPower(0.0);
+        leftBack.setPower(0.0);
+        rightBack.setPower(0.0);
+
+        //going backward
+        leftFront.setPower(-0.1);
+        rightFront.setPower(-0.1);
+        leftBack.setPower(-0.1);
+        rightBack.setPower(-0.1);
+
+        sleep(500);
+
+        leftFront.setPower(0.0);
+        rightFront.setPower(0.0);
+        leftBack.setPower(0.0);
+        rightBack.setPower(0.0);
+
+        //strafe to left
+        leftFront.setPower(-0.5);
+        rightFront.setPower(0.5);
+        leftBack.setPower(0.5);
+        rightBack.setPower(-0.5);
+
+        sleep(1800);
+
+        leftFront.setPower(0.0);
+        rightFront.setPower(0.0);
+        leftBack.setPower(0.0);
+        rightBack.setPower(0.0);
+
+        //going forward
         leftFront.setPower(0.5);
         rightFront.setPower(0.5);
-        leftBack.setPower(0.8);
-        rightBack.setPower(0.8);
+        leftBack.setPower(0.5);
+        rightBack.setPower(0.5);
 
-        sleep(2100);
-
-        leftFront.setPower(0.0);
-        rightFront.setPower(0.0);
-        leftBack.setPower(0.0);
-        rightBack.setPower(0.0);
-
-        //tank turn
-        leftFront.setPower(-0.242);
-        rightFront.setPower(0.242);
-        leftBack.setPower(-0.242);
-        rightBack.setPower(0.242);
-
-        sleep(2500);
+        sleep(2300);
 
         leftFront.setPower(0.0);
         rightFront.setPower(0.0);
         leftBack.setPower(0.0);
         rightBack.setPower(0.0);
 
-    //going a little backwards
-        leftFront.setPower(0.2);
-        rightFront.setPower(0.2);
-        leftBack.setPower(0.2);
-        rightBack.setPower(0.2);
-
-        sleep(1000);
-
-        leftFront.setPower(0.0);
-        rightFront.setPower(0.0);
-        leftBack.setPower(0.0);
-        rightBack.setPower(0.0);
-
-    //collector intakes
+        //collector intakes
 
         collector.setPower (-0.9);
-        sleep(3300);
+        sleep(3100);
         collector.setPower(0.0);
 
     //collector outakes
