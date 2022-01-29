@@ -120,70 +120,15 @@ public class CarouselPark_RED extends LinearOpMode {
         dropper.setPosition(0);
         sleep(3000);
 
-        //going forward
-        leftFront.setPower(0.25);
-        rightFront.setPower(0.25);
-        leftBack.setPower(0.25);
-        rightBack.setPower(0.25);
+        //forward slightly
 
-        sleep(1500);
+        //strafe left
 
-        leftFront.setPower(0.0);
-        rightFront.setPower(0.0);
-        leftBack.setPower(0.0);
-        rightBack.setPower(0.0);
+        //back a little
 
-        //going backward
-        leftFront.setPower(-0.1);
-        rightFront.setPower(-0.1);
-        leftBack.setPower(-0.1);
-        rightBack.setPower(-0.1);
+        //strafe left
 
-        sleep(1700);
-
-        leftFront.setPower(0.0);
-        rightFront.setPower(0.0);
-        leftBack.setPower(0.0);
-        rightBack.setPower(0.0);
-
-        //strafe to left
-        leftFront.setPower(-1*-0.5);
-        rightFront.setPower(-1*0.5);
-        leftBack.setPower(-1*0.5);
-        rightBack.setPower(-1*-0.5);
-
-        sleep(1500);
-
-        leftFront.setPower(0.0);
-        rightFront.setPower(0.0);
-        leftBack.setPower(0.0);
-        rightBack.setPower(0.0);
-
-        //going back
-        leftFront.setPower(-0.1);
-        rightFront.setPower(-0.1);
-        leftBack.setPower(-0.1);
-        rightBack.setPower(-0.1);
-
-        sleep(500);
-
-        leftFront.setPower(0.0);
-        rightFront.setPower(0.0);
-        leftBack.setPower(0.0);
-        rightBack.setPower(0.0);
-
-        //strafe to left
-        leftFront.setPower(-1*-0.5);
-        rightFront.setPower(-1*0.5);
-        leftBack.setPower(-1*0.5);
-        rightBack.setPower(-1*-0.5);
-
-        sleep(1000);
-
-        leftFront.setPower(0.0);
-        rightFront.setPower(0.0);
-        leftBack.setPower(0.0);
-        rightBack.setPower(0.0);
+        //forward slightly
 
         //spinner starts
         spinner.setPower(0.35);
@@ -195,47 +140,9 @@ public class CarouselPark_RED extends LinearOpMode {
         sleep(2000);
         spinner.setPower(0.0);
 
-        //backwards
-        leftFront.setPower(-0.22);
-        rightFront.setPower(-0.22);
-        leftBack.setPower(-0.22);
-        rightBack.setPower(-0.22);
+        //straight back
 
-        sleep(1000);
-
-        leftFront.setPower(0.0);
-        rightFront.setPower(0.0);
-        leftBack.setPower(0.0);
-        rightBack.setPower(0.0);
-
-        //strafe to left
-        leftFront.setPower(-1*-0.3);
-        rightFront.setPower(-1*0.3);
-        leftBack.setPower(-1*0.3);
-        rightBack.setPower(-1*-0.3);
-
-        sleep(1100);
-
-        leftFront.setPower(0.0);
-        rightFront.setPower(0.0);
-        leftBack.setPower(0.0);
-        rightBack.setPower(0.0);
-
-        //backwards
-        leftFront.setPower(-0.15);
-        rightFront.setPower(-0.15);
-        leftBack.setPower(-0.15);
-        rightBack.setPower(-0.15);
-
-        sleep(1500);
-
-        leftFront.setPower(0.0);
-        rightFront.setPower(0.0);
-        leftBack.setPower(0.0);
-        rightBack.setPower(0.0);
-
-
-
+        //strafe left
     }
 }
 
