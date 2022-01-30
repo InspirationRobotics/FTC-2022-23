@@ -81,10 +81,10 @@ public class PushbotTeleopTank_Iterative extends OpMode{
     @Override
     public void loop() {
 
-            robot.leftFront.setPower(gamepad1.left_stick_y);
-            robot.rightFront.setPower(-gamepad1.right_stick_y);
-            robot.leftBack.setPower(gamepad1.left_stick_y);
-            robot.rightBack.setPower(-gamepad1.right_stick_y);
+        robot.leftFront.setPower(gamepad1.left_stick_y);
+        robot.rightFront.setPower(-gamepad1.right_stick_y);
+        robot.leftBack.setPower(gamepad1.left_stick_y);
+        robot.rightBack.setPower(-gamepad1.right_stick_y);
 
         if (gamepad1.left_trigger >= 1.0 && gamepad1.right_trigger < 1.0) {
             // right trigger is not pressed value of 0
@@ -111,21 +111,21 @@ public class PushbotTeleopTank_Iterative extends OpMode{
         }
 
         // Use gamepad buttons to move the arm up (Y) and down (A)
-      if (gamepad1.right_bumper)
-          robot.collector.setPower(1);
-       else if (gamepad1.left_bumper)
-           robot.collector.setPower(-1);
-       else
-           robot.collector.setPower(0.0);
+        if (gamepad1.right_bumper)
+            robot.collector.setPower(1);
+        else if (gamepad1.left_bumper)
+            robot.collector.setPower(-1);
+        else
+            robot.collector.setPower(0.0);
 
-      if(gamepad2.left_bumper)robot.spinner.setPower(0.4);
-      else if (gamepad2.right_bumper) {
-           robot.spinner.setPower(-0.4);
-      }
-       else {
-       robot.spinner.setPower(0);
-      }
-       robot.extender.setPower(-gamepad2.left_stick_y);
+        if(gamepad2.left_bumper)robot.spinner.setPower(0.4);
+        else if (gamepad2.right_bumper) {
+            robot.spinner.setPower(-0.4);
+        }
+        else {
+            robot.spinner.setPower(0);
+        }
+        robot.extender.setPower(-gamepad2.left_stick_y);
 
         if(gamepad2.left_trigger > 0.1){
             robot.dropper.setPosition(SERVO_POSITION);
@@ -136,16 +136,16 @@ public class PushbotTeleopTank_Iterative extends OpMode{
         }
 
         if (gamepad2.dpad_down) {
-           robot.flipperLeft.setPosition(0.5);
-           robot.dropper.setPosition(0);
-       }
+            robot.flipperLeft.setPosition(0.5);
+            robot.dropper.setPosition(0);
+        }
 
-       if (gamepad2.dpad_up){
-        robot.flipperLeft.setPosition(0.0);
-         robot.dropper.setPosition(0.7);
+        if (gamepad2.dpad_up){
+            robot.flipperLeft.setPosition(0.0);
+            robot.dropper.setPosition(0.7);
 
 
-       }
+        }
 
     }
 
