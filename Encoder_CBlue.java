@@ -1,3 +1,4 @@
+
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -6,12 +7,9 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-
 @Autonomous(name="Encoder_CBlue")
 //@Disabled
-public class Encoder_CBlue extends LinearOpMode {
-
-    // Declare OpMode members.
+public class Encoder_CBlue extends LinearOpMode{
     private ElapsedTime runtime = new ElapsedTime();
     static DcMotor leftFront;
     static DcMotor rightFront;
@@ -22,10 +20,12 @@ public class Encoder_CBlue extends LinearOpMode {
     Servo flipperLeft;
     DcMotor extender;
 
-    public double encoder_ticks_per_rotation;    // eg: TETRIX Motor Encoder
-    public double gear_ratio;     // 56/24
-    public double wheel_circumference;     // For figuring circumference
-    public static double encoder_ticks_per_cm;
+    public  double COUNTS_PER_MOTOR_REV;
+    public  double DRIVE_GEAR_REDUCTION;
+    public  double WHEEL_DIAMETER_INCH;
+    public  double COUNTS_PER_INCH;
+    public  double ROBOT_DIAMETER;
+    public  double ROBOT_CIRCUMFERENCE;
 
     double power = 0.5;
 
@@ -47,87 +47,57 @@ public class Encoder_CBlue extends LinearOpMode {
         leftFront.setDirection(DcMotor.Direction.REVERSE);
         leftBack.setDirection(DcMotor.Direction.REVERSE);
 
-        /*leftFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        leftBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        rightFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        rightBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);*/
-
-        encoder_ticks_per_rotation = 1440;    // eg: TETRIX Motor Encoder
-        gear_ratio = 30.159;     //NOT SURE IF THIS IS ACCURATE
-        wheel_circumference = 301.59;    //NOT SURE IF THIS IS ACCURATE
-        encoder_ticks_per_cm = encoder_ticks_per_rotation/(wheel_circumference*gear_ratio);
+        COUNTS_PER_MOTOR_REV = 537.6;
+        DRIVE_GEAR_REDUCTION = 19.2/1;     // This is < 1.0 if geared UP (32 teeth to 16 teeth)
+        WHEEL_DIAMETER_INCH = 96;     // For figuring circumference
+        COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) / (WHEEL_DIAMETER_INCH* 3.1415);
+        ROBOT_CIRCUMFERENCE = ROBOT_DIAMETER * 3.1415;
 
         waitForStart();
         runtime.reset();
 
-        //strafe to right
-        leftFront.setPower(0.5);
-        rightFront.setPower(-0.5);
-        leftBack.setPower(-0.5);
-        rightBack.setPower(0.5);
-
-        sleep(1250);
-
-        leftFront.setPower(0.0);
-        rightFront.setPower(0.0);
-        leftBack.setPower(0.0);
-        rightBack.setPower(0.0);
+        //strafe left
+        encoderStrafeINCH(-39, 0.5);
 
         leftFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        leftBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        leftBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        //encoderMoveBasic(1000, 1000, 0.5);
-        encoderMoveCM(-705, -705, 0.5);
 
-        encoderMoveCM(15.24, 15.24, 0.5);
+        leftFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rightFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        leftBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rightBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
+        //runs backwards
+        encoderMoveINCH(-29, -29, 0.5);
+
+
+        //dropper starts and ends
         extender.setPower(1);
         sleep(1500);
         flipperLeft.setPosition(0);
         sleep(1500);
+
         //deposit element onto shipping hub
         dropper.setPosition(1);
         sleep(1500);
+
         //set dropper back into position
         dropper.setPosition(0);
         sleep(1500);
 
-        /*leftFront.setPower(-0.25);
-        rightFront.setPower(0.25);
-        leftBack.setPower(-0.25);
-        rightBack.setPower(0.25);
+//runs forward
+        encoderMoveINCH(10, 10, 0.5);
 
-        sleep(1100);
+        //strafe left
+        encoderStrafeINCH(110, 0.4);
 
-        leftFront.setPower(0.0);
-        rightFront.setPower(0.0);
-        leftBack.setPower(0.0);
-        rightBack.setPower(0.0);*/
-
-        encoderMoveCM(127, 127, 0.5);
-        telemetry.addData(":|", null);
-
-        encoderMoveCM(-610, 610, 0.3);
-        encoderMoveCM(1400, 1400, 0.5);
-        encoderMoveCM(610, -610, 0.3);
-
-        leftFront.setPower(-0.5);
-        rightFront.setPower(0.5);
-        leftBack.setPower(0.5);
-        rightBack.setPower(-0.5);
-
-        sleep(700);
-
-        leftFront.setPower(0.0);
-        rightFront.setPower(0.0);
-        leftBack.setPower(0.0);
-        rightBack.setPower(0.0);
-
-        encoderMoveCM(200,200, 0.5);
-        encoderMoveCM(100, 100, 0.2);
-        encoderMoveCM(100, 100, 0.2);
+        leftFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rightFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        leftBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rightBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         //spinner starts
         spinner.setPower(0.35);
@@ -139,10 +109,9 @@ public class Encoder_CBlue extends LinearOpMode {
         sleep(2000);
         spinner.setPower(0.0);
 
-        encoderMoveCM(-400, -400, 0.5);
-
+        //runs forward
+        encoderMoveINCH(-17, -17, 0.5);
     }
-
 
     int leftPos = 0;
     int rightPos = 0;
@@ -168,35 +137,45 @@ public class Encoder_CBlue extends LinearOpMode {
         rightBack.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
 
-   public void encoderMoveCM(double leftCM, double rightCM, double power){
-        int newLeftTarget = leftFront.getCurrentPosition()+(int)(leftCM*encoder_ticks_per_cm);
-        int newRightTarget = rightFront.getCurrentPosition()+(int)(rightCM*encoder_ticks_per_cm);
-        double leftSpeed;
-        double rightSpeed;
+        /*public void encoderStrafe (double distance, double power){
 
-        leftFront.setTargetPosition(newLeftTarget);
-        leftBack.setTargetPosition(newLeftTarget);
-        rightFront.setTargetPosition(newRightTarget);
-        rightBack.setTargetPosition(newRightTarget);
+            int ticks = (int)(distance * 301.59);
 
-       if (Math.abs(leftCM) > Math.abs(rightCM)) {
-           leftSpeed = power;
-           rightSpeed = (power * rightCM) / leftCM;
-       } else {
-           rightSpeed = power;
-           leftSpeed = (power * leftCM) / rightCM;
-       }
+            leftFront.setTargetPosition(leftFront.getCurrentPosition()-ticks);
+            leftBack.setTargetPosition(leftBack.getCurrentPosition()+ticks);
+            rightFront.setTargetPosition(rightFront.getCurrentPosition()+ticks);
+            rightBack.setTargetPosition(rightBack.getCurrentPosition()-ticks);
 
-       leftFront.setPower(leftSpeed);
-       rightFront.setPower(rightSpeed);
-       leftBack.setPower(leftSpeed);
-       rightBack.setPower(rightSpeed);
+            leftFront.setPower(-power);
+            rightFront.setPower(power);
+            leftBack.setPower(power);
+            rightBack.setPower(-power);
 
+            leftFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            rightFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            leftBack.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            rightBack.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+    }*/
+
+    public void encoderStrafeINCH(double inches, double power){
+        int ticks = (int)(inches*COUNTS_PER_INCH);
+
+        leftFront.setTargetPosition(leftFront.getCurrentPosition()-ticks);
+        leftBack.setTargetPosition(leftBack.getCurrentPosition()+ticks);
+        rightFront.setTargetPosition(rightFront.getCurrentPosition()+ticks);
+        rightBack.setTargetPosition(rightBack.getCurrentPosition()-ticks);
+
+        leftFront.setPower(power);
+        rightFront.setPower(power);
+        leftBack.setPower(power);
+        rightBack.setPower(power);
 
         leftFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         rightFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         leftBack.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         rightBack.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
 
         //continue moving
         while (opModeIsActive() && ((leftFront.isBusy() && rightFront.isBusy() && leftBack.isBusy() && rightBack.isBusy()))) {
@@ -208,9 +187,49 @@ public class Encoder_CBlue extends LinearOpMode {
         leftBack.setPower(0);
         rightBack.setPower(0);
 
+    }
+
+    public void encoderMoveINCH(double leftINCH, double rightINCH, double power){
+        int newLeftTarget = leftFront.getCurrentPosition()+(int)(leftINCH*COUNTS_PER_INCH);
+        int newRightTarget = rightFront.getCurrentPosition()+(int)(rightINCH*COUNTS_PER_INCH);
+        double leftSpeed;
+        double rightSpeed;
+
+        leftFront.setTargetPosition(newLeftTarget);
+        leftBack.setTargetPosition(newLeftTarget);
+        rightFront.setTargetPosition(newRightTarget);
+        rightBack.setTargetPosition(newRightTarget);
+
+        if (Math.abs(leftINCH) > Math.abs(rightINCH)) {
+            leftSpeed = power;
+            rightSpeed = (power * rightINCH) / leftINCH;
+        } else {
+            rightSpeed = power;
+            leftSpeed = (power * leftINCH) / rightINCH;
+        }
+
+        leftFront.setPower(leftSpeed);
+        rightFront.setPower(rightSpeed);
+        leftBack.setPower(leftSpeed);
+        rightBack.setPower(rightSpeed);
+
+        leftFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rightFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        leftBack.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rightBack.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+
+        //continue movinggg
+        while (opModeIsActive() && ((leftFront.isBusy() && rightFront.isBusy() && leftBack.isBusy() && rightBack.isBusy()))) {
+        }
+
+        // Stop all motion;
+        leftFront.setPower(0);
+        rightFront.setPower(0);
+        leftBack.setPower(0);
+        rightBack.setPower(0);
 
     }
 }
-
 
 

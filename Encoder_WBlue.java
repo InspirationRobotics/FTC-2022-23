@@ -6,10 +6,9 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-
-@Autonomous(name="Encoder_WBlue")
+    @Autonomous(name="Encoder_WBlue")
 //@Disabled
-public class Encoder_WBlue extends LinearOpMode{
+    public class Encoder_WBlue extends LinearOpMode{
         private ElapsedTime runtime = new ElapsedTime();
         static DcMotor leftFront;
         static DcMotor rightFront;
@@ -20,15 +19,12 @@ public class Encoder_WBlue extends LinearOpMode{
         Servo flipperLeft;
         DcMotor extender;
 
-
-       // public double wheel_circumference;     // For figuring circumference
-       //public double wheel_diameter;
-      public double gear_ratio;     // 56/24
-      public static double encoder_ticks_per_inch;
-      public double encoder_ticks_per_rotation;// eg: TETRIX Motor Encoder
-      public double DRIVE_GEAR_REDUCTION;
-      public double WHEEL_DIAMETER_INCHES;
-      public double COUNTS_PER_INCH;
+        public  double COUNTS_PER_MOTOR_REV;
+        public  double DRIVE_GEAR_REDUCTION;
+        public  double WHEEL_DIAMETER_INCH;
+        public  double COUNTS_PER_INCH;
+        public  double ROBOT_DIAMETER;
+        public  double ROBOT_CIRCUMFERENCE;
 
         double power = 0.5;
 
@@ -50,87 +46,64 @@ public class Encoder_WBlue extends LinearOpMode{
             leftFront.setDirection(DcMotor.Direction.REVERSE);
             leftBack.setDirection(DcMotor.Direction.REVERSE);
 
-            /*gear_ratio = 30.16;//NOT SURE IF THIS IS ACCURATE
-            wheel_diameter = 18;
-            wheel_circumference = wheel_diameter * 3.1415; //NOT SURE IF THIS IS ACCURATE*/
-            encoder_ticks_per_inch = (encoder_ticks_per_rotation * DRIVE_GEAR_REDUCTION) / (WHEEL_DIAMETER_INCHES) * 3.14;
-            gear_ratio = 19.2;//NOT SURE IF THIS IS ACCURATE
-            WHEEL_DIAMETER_INCHES = 96;
-            encoder_ticks_per_rotation = 537.6;// eg: TETRIX Motor Encoder
+            COUNTS_PER_MOTOR_REV = 537.6;
+            DRIVE_GEAR_REDUCTION = 19.2/1;     // This is < 1.0 if geared UP (32 teeth to 16 teeth)
+            WHEEL_DIAMETER_INCH = 96;     // For figuring circumference
+            COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) / (WHEEL_DIAMETER_INCH* 3.1415);
+            ROBOT_CIRCUMFERENCE = ROBOT_DIAMETER * 3.1415;
 
             waitForStart();
             runtime.reset();
 
-            encoderStrafe(685.8,685.8,1);
 
-            //encoderMoveBasic(1000, 1000, 0.5);
-            encoderMoveCM(55.88, 55.88, -0.5);
+        //strafe left
+            encoderStrafeINCH(34, 0.5);
 
-            encoderMoveCM(15.24, 15.24, 0.5);
+            leftFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            rightFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            leftBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            rightBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
+
+            leftFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            rightFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            leftBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            rightBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+            //runs backwards
+            encoderMoveINCH(-29, -29, 0.5);
+
+
+            //dropper starts and ends
             extender.setPower(1);
             sleep(1500);
             flipperLeft.setPosition(0);
             sleep(1500);
+
             //deposit element onto shipping hub
             dropper.setPosition(1);
             sleep(1500);
+
             //set dropper back into position
             dropper.setPosition(0);
             sleep(1500);
 
-            leftFront.setPower(-0.25);
-            rightFront.setPower(0.25);
-            leftBack.setPower(-0.25);
-            rightBack.setPower(0.25);
+            //runs forward
+            encoderMoveINCH(20, 20, 0.4);
 
-            sleep(1100);
+            //turn
+            encoderMoveINCH(25, -25, 0.4);
 
-            leftFront.setPower(0.0);
-            rightFront.setPower(0.0);
-            leftBack.setPower(0.0);
-            rightBack.setPower(0.0);
+            //strafe left
+            encoderStrafeINCH(25, 0.4);
 
-            encoderMoveCM(127, 127, 0.5);
+            leftFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            rightFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            leftBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            rightBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-            //strafe to right
-            leftFront.setPower(-0.5);
-            rightFront.setPower(0.5);
-            leftBack.setPower(0.5);
-            rightBack.setPower(-0.5);
-
-            sleep(1200);
-
-            leftFront.setPower(0.0);
-            rightFront.setPower(0.0);
-            leftBack.setPower(0.0);
-            rightBack.setPower(0.0);
-
-            //spinner starts
-            spinner.setPower(0.35);
-            sleep(1500);
-            spinner.setPower(0.0);
-
-            //spins faster
-            spinner.setPower(0.35);
-            sleep(2000);
-            spinner.setPower(0.0);
-
-            //strafe to right
-            leftFront.setPower(0.25);
-            rightFront.setPower(-0.25);
-            leftBack.setPower(-0.25);
-            rightBack.setPower(0.25);
-
-            sleep(1000);
-
-            leftFront.setPower(0.0);
-            rightFront.setPower(0.0);
-            leftBack.setPower(0.0);
-            rightBack.setPower(0.0);
-
-            encoderMoveCM(7.62, 7.62, 0.5);
-
+            //runs forward
+            encoderMoveINCH(70, 70, 0.3);
         }
 
         int leftPos = 0;
@@ -157,34 +130,61 @@ public class Encoder_WBlue extends LinearOpMode{
             rightBack.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         }
 
-        public void encoderStrafe (double leftCM, double rightCM, double power){
+        /*public void encoderStrafe (double distance, double power){
 
-            int newLeftTarget = leftFront.getCurrentPosition()+(int)(leftCM*encoder_ticks_per_inch);
-            int newRightTarget = rightFront.getCurrentPosition()+(int)(rightCM*encoder_ticks_per_inch);
-            double leftSpeed;
-            double rightSpeed;
+            int ticks = (int)(distance * 301.59);
 
+            leftFront.setTargetPosition(leftFront.getCurrentPosition()-ticks);
+            leftBack.setTargetPosition(leftBack.getCurrentPosition()+ticks);
+            rightFront.setTargetPosition(rightFront.getCurrentPosition()+ticks);
+            rightBack.setTargetPosition(rightBack.getCurrentPosition()-ticks);
 
             leftFront.setPower(-power);
-            leftBack.setPower(power);
             rightFront.setPower(power);
+            leftBack.setPower(power);
             rightBack.setPower(-power);
-
-
-            leftFront.setTargetPosition(leftPos);
-            leftBack.setTargetPosition(leftPos);
-            rightFront.setTargetPosition(rightPos);
-            rightBack.setTargetPosition(rightPos);
 
             leftFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             rightFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             leftBack.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             rightBack.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
+    }*/
+
+    public void encoderStrafeINCH(double inches, double power){
+        int ticks = (int)(inches*COUNTS_PER_INCH);
+
+        leftFront.setTargetPosition(leftFront.getCurrentPosition()-ticks);
+        leftBack.setTargetPosition(leftBack.getCurrentPosition()+ticks);
+        rightFront.setTargetPosition(rightFront.getCurrentPosition()+ticks);
+        rightBack.setTargetPosition(rightBack.getCurrentPosition()-ticks);
+
+        leftFront.setPower(power);
+        rightFront.setPower(power);
+        leftBack.setPower(power);
+        rightBack.setPower(power);
+
+        leftFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rightFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        leftBack.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rightBack.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+
+        //continue moving
+        while (opModeIsActive() && ((leftFront.isBusy() && rightFront.isBusy() && leftBack.isBusy() && rightBack.isBusy()))) {
+        }
+
+        // Stop all motion;
+        leftFront.setPower(0);
+        rightFront.setPower(0);
+        leftBack.setPower(0);
+        rightBack.setPower(0);
+
     }
-        public void encoderMoveCM(double leftCM, double rightCM, double power){
-           int newLeftTarget = leftFront.getCurrentPosition()+(int)(leftCM*encoder_ticks_per_inch);
-           int newRightTarget = rightFront.getCurrentPosition()+(int)(rightCM*encoder_ticks_per_inch);
+
+        public void encoderMoveINCH(double leftINCH, double rightINCH, double power){
+           int newLeftTarget = leftFront.getCurrentPosition()+(int)(leftINCH*COUNTS_PER_INCH);
+           int newRightTarget = rightFront.getCurrentPosition()+(int)(rightINCH*COUNTS_PER_INCH);
             double leftSpeed;
             double rightSpeed;
 
@@ -193,12 +193,12 @@ public class Encoder_WBlue extends LinearOpMode{
             rightFront.setTargetPosition(newRightTarget);
             rightBack.setTargetPosition(newRightTarget);
 
-            if (Math.abs(leftCM) > Math.abs(rightCM)) {
+            if (Math.abs(leftINCH) > Math.abs(rightINCH)) {
                 leftSpeed = power;
-                rightSpeed = (power * rightCM) / leftCM;
+                rightSpeed = (power * rightINCH) / leftINCH;
             } else {
                 rightSpeed = power;
-                leftSpeed = (power * leftCM) / rightCM;
+                leftSpeed = (power * leftINCH) / rightINCH;
             }
 
             leftFront.setPower(leftSpeed);
@@ -212,7 +212,7 @@ public class Encoder_WBlue extends LinearOpMode{
             rightBack.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
 
-            //continue moving
+            //continue movinggg
             while (opModeIsActive() && ((leftFront.isBusy() && rightFront.isBusy() && leftBack.isBusy() && rightBack.isBusy()))) {
             }
 
@@ -221,7 +221,6 @@ public class Encoder_WBlue extends LinearOpMode{
             rightFront.setPower(0);
             leftBack.setPower(0);
             rightBack.setPower(0);
-
 
         }
     }
