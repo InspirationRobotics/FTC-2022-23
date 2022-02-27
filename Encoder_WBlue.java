@@ -71,7 +71,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
             rightBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
             //runs backwards
-            encoderMoveINCH(-29, -29, 0.5);
+            encoderMoveINCH(-28, -28, 0.5);
 
 
             //dropper starts and ends
