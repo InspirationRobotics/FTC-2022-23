@@ -27,7 +27,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-/*package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -58,14 +58,14 @@ import org.firstinspires.ftc.teamcode.Robot;
 
         waitForStart();
 
-        //adjust setPower and sleep to turn the correct amount
+    //adjust setPower and sleep to turn the correct amount
     leftFront.setPower(0.5);
     rightFront.setPower(0.2);
     leftBack.setPower(0.5);
     rightBack.setPower(0.2);
     Thread.sleep(100);
 
-        //adjust sleep to turn the correct amount
+    //adjust sleep to turn the correct amount
     leftFront.setPower(0.5);
     rightFront.setPower(0.5);
     leftBack.setPower(0.5);
@@ -74,7 +74,7 @@ import org.firstinspires.ftc.teamcode.Robot;
 
 
 
-    }*/
+    }
 
 
 
