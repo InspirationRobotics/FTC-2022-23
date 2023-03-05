@@ -206,7 +206,9 @@ public class auto extends OpMode {
             robot.backLeft.setPower(0);
             robot.backRight.setPower(0);
         }
-
+      telemetry.addData("odometer value", robot.frontLeft.getCurrentPosition());
+        telemetry.addData("odometer value", robot.frontRight.getCurrentPosition());
+        telemetry.addData("odometer value", robot.backLeft.getCurrentPosition());
         /* gamepad 2 start ------------------------------------------------*/
 
         /*robot.lift.setPower(gamepad2.right_stick_y);
