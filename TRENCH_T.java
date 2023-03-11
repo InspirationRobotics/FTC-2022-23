@@ -5,8 +5,13 @@ import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.tel
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.ClassFactory;
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
+import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint;
@@ -23,8 +28,6 @@ import org.openftc.easyopencv.OpenCvPipeline;
 
 import java.util.ArrayList;
 import java.util.List;
-
-
 
 /* Copyright (c) 2017 FIRST. All rights reserved.
  *
@@ -58,16 +61,15 @@ import java.util.List;
 @TeleOp(name="TRENCH_T", group="Pushbot")
 public class TRENCH_T extends OpMode {
 
-    public OpenCvInternalCamera phoneCam;
-    public PowerPlayDeterminationPipeline pipeline;
-
-
     private ElapsedTime runtime = new ElapsedTime();
-    public DcMotor frontLeft   = null;
-    public DcMotor  frontRight    = null;
-    public DcMotor  backLeft = null;
-    public DcMotor  backRight  = null;
-    //ColorSensor color_sensor;
+    static DcMotor frontLeft;
+    static DcMotor frontRight;
+    static DcMotor backLeft;
+    static DcMotor backRight;
+    public Servo clawRight   = null;
+    public Servo  clawLeft    = null;
+    public Servo  flipper = null;
+    public DcMotor  lift  = null;
 
     public static final double SERVO_POSITION = 0.7;
     public static final double SERVO_RETRACTED_POSITION = 1.0;
@@ -80,72 +82,22 @@ public class TRENCH_T extends OpMode {
     double TPR = 384.5;
     double TP360 = TPR * 8;
 
-    public static final double STRAFE_SPEED = 0.5;
+    public static final double STRAFE_SPEED = 1;
 
-    public void cvinit() {
-        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-        phoneCam = OpenCvCameraFactory.getInstance().createInternalCamera(OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId);
-        pipeline = new PowerPlayDeterminationPipeline();
-        phoneCam.setPipeline(pipeline);
-        phoneCam.setViewportRenderingPolicy(OpenCvCamera.ViewportRenderingPolicy.MAXIMIZE_EFFICIENCY);
-        phoneCam.pauseViewport();
-
-        phoneCam.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener()
-        {
-            @Override
-            public void onOpened()
-            {
-                /*
-                 * Tell the webcam to start streaming images to us! Note that you must make sure
-                 * the resolution you specify is supported by the camera. If it is not, an exception
-                 * will be thrown.
-                 *
-                 * Keep in mind that the SDK's UVC driver (what OpenCvWebcam uses under the hood) only
-                 * supports streaming from the webcam in the uncompressed YUV image format. This means
-                 * that the maximum resolution you can stream at and still get up to 30FPS is 480p (640x480).
-                 * Streaming at e.g. 720p will limit you to up to 10FPS and so on and so forth.
-                 *
-                 * Also, we specify the rotation that the webcam is used in. This is so that the image
-                 * from the camera sensor can be rotated such that it is always displayed with the image upright.
-                 * For a front facing camera, rotation is defined assuming the user is looking at the screen.
-                 * For a rear facing camera or a webcam, rotation is defined assuming the camera is facing
-                 * away from the user.
-                 */
-                //phoneCam.startStreaming(320, 240, OpenCvCameraRotation.UPRIGHT);
-                phoneCam.startStreaming(1280, 720, OpenCvCameraRotation.SIDEWAYS_LEFT);
-            }
-
-            @Override
-            public void onError(int errorCode)
-            {
-                /*
-                 * This will be called if the camera could not be opened
-                 */
-                telemetry.addData("Camera OnError", 0);
-
-            }
-        });
-
-
-    }
-
-    public void closeCamera() {
-        phoneCam.stopStreaming();
-        phoneCam.closeCameraDevice();
-    }
     @Override
     public void init() {
 
-        cvinit();
-        robot.frontLeft = hardwareMap.dcMotor.get("frontLeft");
-        robot.frontRight = hardwareMap.dcMotor.get("frontRight");
-        robot.backLeft = hardwareMap.dcMotor.get("backLeft");
-        robot.backRight = hardwareMap.dcMotor.get("backRight");
-        //color_sensor = hardwareMap.colorSensor.get("color");
+        frontLeft = hardwareMap.dcMotor.get("frontLeft");
+        backLeft = hardwareMap.dcMotor.get("backLeft");
+        frontRight = hardwareMap.dcMotor.get("frontRight");
+        backRight = hardwareMap.dcMotor.get("backRight");
+        lift = hardwareMap.dcMotor.get("lift");
+        flipper = hardwareMap.servo.get("flipper");
+        clawLeft = hardwareMap.servo.get("clawLeft");
+        clawRight = hardwareMap.servo.get("clawRight");
 
-
-        robot.frontLeft.setDirection(DcMotor.Direction.REVERSE);
-        robot.frontRight.setDirection(DcMotor.Direction.REVERSE);
+        frontLeft.setDirection(DcMotor.Direction.REVERSE);
+        backLeft.setDirection(DcMotor.Direction.REVERSE);
 
 
         telemetry.addData("Say", "Hello Driver");    //
@@ -156,7 +108,6 @@ public class TRENCH_T extends OpMode {
      * Code to run REPEATEDLY after the driver hits INIT, but before they hit PLAY
      */
     @Override
-
     public void init_loop() {
 
     }
@@ -170,169 +121,59 @@ public class TRENCH_T extends OpMode {
     @Override
     public void loop() {
         /* gamepad 1 start ------------------------------------------------*/
-        robot.frontLeft.setPower(-gamepad1.left_stick_y);
-        robot.frontRight.setPower(gamepad1.right_stick_y);
-        robot.backLeft.setPower(-gamepad1.left_stick_y);
-        robot.backRight.setPower(-gamepad1.right_stick_y);
+        frontLeft.setPower(-gamepad1.left_stick_y);
+        frontRight.setPower(-gamepad1.right_stick_y);
+        backLeft.setPower(-gamepad1.left_stick_y);
+        backRight.setPower(-gamepad1.right_stick_y);
 
-        if (gamepad1.left_bumper) {
-            robot.frontLeft.setPower(-STRAFE_SPEED);
-            robot.frontRight.setPower(STRAFE_SPEED);
-            robot.backLeft.setPower(STRAFE_SPEED);
-            robot.backRight.setPower(-STRAFE_SPEED);
-        } else if (gamepad1.right_bumper) {
-            robot.frontLeft.setPower(STRAFE_SPEED);
-            robot.frontRight.setPower(-STRAFE_SPEED);
-            robot.backLeft.setPower(-STRAFE_SPEED);
-            robot.backRight.setPower(STRAFE_SPEED);
+        if (gamepad1.right_bumper) {
+            frontLeft.setPower(STRAFE_SPEED);
+            frontRight.setPower(STRAFE_SPEED);
+            backLeft.setPower(STRAFE_SPEED);
+            backRight.setPower(STRAFE_SPEED);
+        } else if (gamepad1.left_bumper) {
+            frontLeft.setPower(-STRAFE_SPEED);
+            frontRight.setPower(-STRAFE_SPEED);
+            backLeft.setPower(-STRAFE_SPEED);
+            backRight.setPower(-STRAFE_SPEED);
         } else {
-            robot.frontLeft.setPower(0);
-            robot.frontRight.setPower(0);
-            robot.backLeft.setPower(0);
-            robot.backRight.setPower(0);
+            frontLeft.setPower(0);
+            frontRight.setPower(0);
+            backLeft.setPower(0);
+            backRight.setPower(0);
         }
 
         /* gamepad 2 start ------------------------------------------------*/
 
-        /*robot.lift.setPower(gamepad2.right_stick_y);
-        robot.lift.setPower(0.0);*/
+        lift.setPower(gamepad2.right_stick_y);
 
-        if (gamepad2.left_bumper) {
-            robot.flipper.setPosition(1);
-            robot.flipper.setPosition(0);
+        if (gamepad2.dpad_up) {
+            flipper.setPosition(1);
+            flipper.setPosition(0);
         }
-        if (gamepad2.right_bumper) {
-            robot.flipper.setPosition(0);
-            robot.flipper.setPosition(1);
+        if (gamepad2.dpad_down) {
+            flipper.setPosition(0);
+            flipper.setPosition(1);
+        }
+        if (gamepad2.dpad_right) {
+            flipper.setPosition(0.5);
+            flipper.setPosition(0.5);
         }
 
         if (gamepad2.a) {
-            robot.clawLeft.setPosition(0);
-            robot.clawRight.setPosition(0);
+            clawLeft.setPosition(0);
+            clawRight.setPosition(1);
         }
-        if (gamepad2.b) {
-            robot.clawLeft.setPosition(1);
-            robot.clawRight.setPosition(1);
-        }
-       /*     if(!gamepad1.left_bumper && gamepad1.right_bumper) {
-            robot.lift.setPower(-1);
-        } else if (!gamepad1.right_bumper && gamepad1.left_bumper) {
-            robot.lift.setPower(1);
-        } else if (!gamepad1.left_bumper && !gamepad1.right_bumper) {
-            robot.lift.setPower(0);
+        if (gamepad2.x) {
+            clawLeft.setPosition(0.5);
+            clawRight.setPosition(0.5);
         }
 
-        */
-    }
-    @Override
-    public void stop () {
-    }
-
-    /* computer vision start ------------------------------------------------ */
-    public class PowerPlayDeterminationPipeline extends OpenCvPipeline {
-        private boolean showContours = true;
-        int ringnum = 0;
-        int frameNumber = 0;
-
-        /* bounding rect and contours */
-        private List<MatOfPoint> contours = new ArrayList<>();
-        Rect bounding_rect_orange_global = new Rect();
-        private List<MatOfPoint> contours_orange = new ArrayList<>();
-        private Rect roi = new Rect(109, 0, 234, 198);
-
-        public synchronized void setShowCountours(boolean enabled) {
-            showContours = enabled;
-        }
-
-        public synchronized List<MatOfPoint> getContours() {
-            return contours;
-        }
-
-        double largest_area;
-
-        public Mat processFrame(Mat rgba) {
-
-            Size size = new Size(352, 198);
-            frameNumber++;
-            telemetry.addData("GotFrame ", frameNumber);
-            telemetry.addData("Say", "Got Frame");
-
-            Imgproc.resize(rgba, rgba, size);
-            rgba = new Mat(rgba.clone(), roi);
-
-            /* bounding boxes */
-            Rect bounding_rect_orange = new Rect();
-
-            /* matricies: hsv, thresholded, and rgba/thresholded cropped */
-            Mat hsv = new Mat();
-            Mat grey = new Mat();
-            Mat thresholded_orange = new Mat();
-
-            /* change colorspace */
-            Imgproc.cvtColor(rgba, hsv, Imgproc.COLOR_RGB2HSV, 3);
-
-            /* threshold */
-            Core.inRange(hsv, new Scalar(15, 100, 40), new Scalar(35, 255, 255), thresholded_orange);
-
-            /* find contours */
-            contours_orange = new ArrayList<>();
-            Imgproc.findContours(thresholded_orange, contours_orange, new Mat(), Imgproc.RETR_LIST, Imgproc.CHAIN_APPROX_SIMPLE);
-
-            /* create a bounding rect based on the largest contour */
-
-            if (showContours && !contours_orange.isEmpty()) {
-
-                largest_area = 0;
-                for (int i = 0; i < contours_orange.size(); i++) /* iterate through the contours */ {
-                    double area = Imgproc.contourArea(contours_orange.get(i));  /* get contour area */
-                    if (area > largest_area) {
-                        largest_area = area; /* save the largest contour area */
-
-                        /* get a bounding rectangle based on the largest contour */
-                        bounding_rect_orange = Imgproc.boundingRect(contours_orange.get(i));
-                    }
-                }
-
-                /* draw the contours and the bounding rect */
-                Imgproc.drawContours(rgba, contours_orange, -1, new Scalar(255, 255, 0), 1, 8);
-
-            }
-
-
-            bounding_rect_orange_global = bounding_rect_orange;
-
-            telemetry.addData("Area ", largest_area);
-
-            hsv.release();
-            thresholded_orange.release();
-            grey.release();
-
-
-            if (bounding_rect_orange_global.height == 0) {
-                return rgba;
-            } else if (bounding_rect_orange_global.width / bounding_rect_orange_global.height > 2.5) {
-                ringnum = 1;
-            } else if (largest_area < 150) {
-                ringnum = 0;
-            } else {
-                ringnum = 4;
-            }
-
-            /* return the rgba matrix */
-            return rgba;
-        }
-
-        @Override
-        public void onViewportTapped()
-        {
-            phoneCam.resumeViewport();
-        }
-
-        public int returnNum() {
-            return ringnum;
+        if (gamepad2.y) {
+            clawLeft.setPosition(0.7);
+            clawRight.setPosition(0);
         }
     }
-    /* computer vision end ------------------------------------------------------------------------------------- */
 
 }
 
